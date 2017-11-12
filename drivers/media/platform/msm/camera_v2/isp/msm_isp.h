@@ -600,7 +600,7 @@ struct msm_vfe_tasklet_queue_cmd {
 	struct vfe_device *vfe_dev;
 };
 
-#define MSM_VFE_TASKLETQ_SIZE 400
+#define MSM_VFE_TASKLETQ_SIZE 200
 
 enum msm_vfe_overflow_state {
 	NO_OVERFLOW,

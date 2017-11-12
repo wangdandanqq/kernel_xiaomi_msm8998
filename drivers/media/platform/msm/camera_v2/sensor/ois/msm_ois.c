@@ -30,6 +30,10 @@ DEFINE_MSM_MUTEX(msm_ois_mutex);
 #define CDBG(fmt, args...) pr_debug(fmt, ##args)
 #endif
 
+#ifdef _CHIRON_OIS
+bool ois_spi_work_flag = true;
+bool ois_check_flag = false;
+#endif
 static struct v4l2_file_operations msm_ois_v4l2_subdev_fops;
 static int32_t msm_ois_power_up(struct msm_ois_ctrl_t *o_ctrl);
 static int32_t msm_ois_power_down(struct msm_ois_ctrl_t *o_ctrl);
@@ -1053,6 +1057,8 @@ static int32_t msm_ois_platform_probe(struct platform_device *pdev)
 		(&pdev->dev)->of_node);
 	if (rc < 0) {
 		pr_err("%s: No/Error OIS GPIO\n", __func__);
+	} else if (!msm_ois_t->gconf) {
+		pr_err("%s: %d: OIS no GPIO control\n", __func__, __LINE__);
 	} else {
 		msm_ois_t->cam_pinctrl_status = 1;
 		rc = msm_camera_pinctrl_init(

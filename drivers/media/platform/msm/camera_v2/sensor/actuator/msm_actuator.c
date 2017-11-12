@@ -1465,6 +1465,11 @@ static int32_t msm_actuator_set_param(struct msm_actuator_ctrl_t *a_ctrl,
 				a_ctrl->i2c_reg_tbl = NULL;
 				pr_err("Error actuator_init_focus\n");
 				return -EFAULT;
+			} else if (rc == 1) {
+				kfree(a_ctrl->i2c_reg_tbl);
+				a_ctrl->i2c_reg_tbl = NULL;
+				pr_err("actuator_init_focus return 1\n");
+				return rc;
 			}
 		}
 	}
@@ -2043,6 +2048,8 @@ static int32_t msm_actuator_platform_probe(struct platform_device *pdev)
 		(&pdev->dev)->of_node);
 	if (rc < 0) {
 		pr_err("%s: No/Error Actuator GPIOs\n", __func__);
+	} else if (!msm_actuator_t->gconf) {
+		pr_err("%s: %d: Actuator no GPIO control\n", __func__, __LINE__);
 	} else {
 		msm_actuator_t->cam_pinctrl_status = 1;
 		rc = msm_camera_pinctrl_init(

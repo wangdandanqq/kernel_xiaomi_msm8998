@@ -18,6 +18,7 @@
 #include "msm8998-camera.dtsi"
 #include "msm8998-camera-sensor-mtp.dtsi"
 #include "msm8998-pinctrl.dtsi"
+#include "../msm8998-mdss-panels.dtsi"
 #include "msm8998-mdss-panels.dtsi"
 #include "msm8998-blsp.dtsi"
 #include "msm8998-audio.dtsi"

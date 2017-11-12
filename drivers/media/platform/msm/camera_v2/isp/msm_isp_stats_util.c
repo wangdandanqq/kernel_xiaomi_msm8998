@@ -1087,7 +1087,7 @@ static int msm_isp_start_stats_stream(struct vfe_device *vfe_dev_ioctl,
 	uint32_t comp_stats_mask[MAX_NUM_STATS_COMP_MASK] = {0};
 	uint32_t num_stats_comp_mask = 0;
 	struct msm_vfe_stats_stream *stream_info;
-	struct msm_vfe_stats_shared_data *stats_data = NULL;
+	struct msm_vfe_stats_shared_data *stats_data;
 	int num_stream = 0;
 	struct msm_vfe_stats_stream *streams[MSM_ISP_STATS_MAX];
 	struct msm_isp_timestamp timestamp;
@@ -1149,12 +1149,10 @@ static int msm_isp_start_stats_stream(struct vfe_device *vfe_dev_ioctl,
 			comp_stats_mask[stream_info->composite_flag-1] |=
 				1 << idx;
 
-		ISP_DBG("%s: stats_mask %x %x\n",
+		ISP_DBG("%s: stats_mask %x %x active streams %d\n",
 			__func__, comp_stats_mask[0],
-			comp_stats_mask[1]);
-		if (stats_data)
-			ISP_DBG("%s: active_streams = %d\n", __func__,
-				stats_data->num_active_stream);
+			comp_stats_mask[1],
+			stats_data->num_active_stream);
 		streams[num_stream++] = stream_info;
 	}
 

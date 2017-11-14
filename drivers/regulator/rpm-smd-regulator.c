@@ -212,6 +212,7 @@ struct rpm_regulator {
 	u32			pin_ctrl_mask[RPM_VREG_PIN_CTRL_STATE_COUNT];
 	enum rpm_regulator_param_index voltage_index;
 	int			voltage_offset;
+	int			hpm_threshold_current;
 };
 
 /*

@@ -1369,8 +1369,16 @@ static int smb2_configure_typec(struct smb_charger *chg)
 		return rc;
 	}
 
-	/* disable try.SINK mode and legacy cable IRQs */
-	rc = smblib_masked_write(chg, TYPE_C_CFG_3_REG, EN_TRYSINK_MODE_BIT |
+	/* enable try.SINK mode */
+	rc = smblib_masked_write(chg, TYPE_C_CFG_3_REG, EN_TRYSINK_MODE_BIT,
+				EN_TRYSINK_MODE_BIT);
+	if (rc < 0) {
+		dev_err(chg->dev, "Couldn't set Type-C config rc=%d\n", rc);
+		return rc;
+	}
+
+	/* disable legacy cable IRQs */
+	rc = smblib_masked_write(chg, TYPE_C_CFG_3_REG,
 				TYPEC_NONCOMPLIANT_LEGACY_CABLE_INT_EN_BIT |
 				TYPEC_LEGACY_CABLE_INT_EN_BIT, 0);
 	if (rc < 0) {

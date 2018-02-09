@@ -3,6 +3,7 @@
  *
  *  Copyright (C) 2011 ARM Ltd.
  *  All Rights Reserved
+ *  Copyright (C) 2018 XiaoMi, Inc.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License version 2 as
@@ -328,6 +329,7 @@ static void arch_counter_set_user_access(void)
 
 	/* Disable user access to the timers and the physical counter */
 	/* Also disable virtual event stream */
+<<<<<<< HEAD
 	cntkctl &= ~(ARCH_TIMER_USR_PT_ACCESS_EN
 			| ARCH_TIMER_VIRT_EVT_EN
 			| ARCH_TIMER_USR_PCT_ACCESS_EN);
@@ -335,11 +337,20 @@ static void arch_counter_set_user_access(void)
 	/* Enable user access to the virtual counter */
 	cntkctl |= ARCH_TIMER_USR_VT_ACCESS_EN;
 
+=======
+	cntkctl &= ~(ARCH_TIMER_USR_PT_ACCESS_EN | ARCH_TIMER_VIRT_EVT_EN);
+
+	/* Enable user access to the virtual and physical counters */
+	cntkctl |= ARCH_TIMER_USR_PCT_ACCESS_EN | ARCH_TIMER_USR_VT_ACCESS_EN;
+>>>>>>> de64ba702ab3... Kernel: Xiaomi kernel changes for Xiaomi 6 and MIX 2 (Android O)
 	if (IS_ENABLED(CONFIG_ARM_ARCH_TIMER_VCT_ACCESS))
 		cntkctl |= ARCH_TIMER_USR_VCT_ACCESS_EN;
 	else
 		cntkctl &= ~ARCH_TIMER_USR_VCT_ACCESS_EN;
+<<<<<<< HEAD
 
+=======
+>>>>>>> de64ba702ab3... Kernel: Xiaomi kernel changes for Xiaomi 6 and MIX 2 (Android O)
 	arch_timer_set_cntkctl(cntkctl);
 }
 

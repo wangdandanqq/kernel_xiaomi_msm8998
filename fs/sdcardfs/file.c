@@ -121,10 +121,16 @@ static long sdcardfs_unlocked_ioctl(struct file *file, unsigned int cmd,
 		err = lower_file->f_op->unlocked_ioctl(lower_file, cmd, arg);
 
 	/* some ioctls can change inode attributes (EXT2_IOC_SETFLAGS) */
-	if (!err)
+	if (!err) {
 		sdcardfs_copy_and_fix_attrs(file_inode(file),
 				      file_inode(lower_file));
+<<<<<<< HEAD
 	REVERT_CRED(saved_cred);
+=======
+		fsstack_copy_inode_size(file_inode(file),
+				      file_inode(lower_file));
+	}
+>>>>>>> de64ba702ab3... Kernel: Xiaomi kernel changes for Xiaomi 6 and MIX 2 (Android O)
 out:
 	return err;
 }
@@ -264,8 +270,10 @@ static int sdcardfs_open(struct inode *inode, struct file *file)
 
 	if (err)
 		kfree(SDCARDFS_F(file));
-	else
+	else {
 		sdcardfs_copy_and_fix_attrs(inode, sdcardfs_lower_inode(inode));
+		fsstack_copy_inode_size(inode, sdcardfs_lower_inode(inode));
+	}
 
 out_revert_cred:
 	REVERT_CRED(saved_cred);

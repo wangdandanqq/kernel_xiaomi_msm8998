@@ -404,6 +404,10 @@ static void msm_hs_resource_unvote(struct msm_hs_port *msm_uport)
 		return;
 	}
 	atomic_dec(&msm_uport->resource_count);
+<<<<<<< HEAD
+=======
+
+>>>>>>> de64ba702ab3... Kernel: Xiaomi kernel changes for Xiaomi 6 and MIX 2 (Android O)
 	pm_runtime_mark_last_busy(uport->dev);
 	pm_runtime_put_autosuspend(uport->dev);
 }
